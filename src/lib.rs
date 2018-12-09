@@ -200,7 +200,7 @@ impl<F: OrdField> Dictionary<F> {
             );
             orig.fix_obj_after_first_phase(self, FIRST_PHASE_IDX);
             let mut ll = self.ll.clone();
-            ll.remove(ir); // TODO: optimize?
+            ll.remove(ir);
             orig.ll = ll;
             orig.lc = self.lc.clone();
         } else if let Some(jr) = self.lc.iter().position(|&x| x == xr) {
@@ -246,10 +246,9 @@ impl<F: OrdField> Dictionary<F> {
             }
             if c_j != F::zero() {
                 if let Some(&x_i) = afp.ll.iter().find(|&x| *x == x_j) {
-                    // TODO: WTF???
                     // x_i is a primary variable of afp.
                     for j in 0..res.len() {
-                        res[j] = res[j] + c_j * self.m.at(x_i, j); // I FIXME(leo): i hate myself
+                        res[j] = res[j] + c_j * self.m.at(x_i, j);
                     }
                 }
             }
@@ -478,7 +477,6 @@ impl<F: OrdField> Display for Dictionary<F> {
 
             let mut first = true;
             for j in 0..self.w() {
-                // TODO: ugly!
                 if !first {
                     let _ = write!(f, "& + ");
                 }
@@ -583,7 +581,7 @@ mod test {
     #[test]
     fn test_leaving_variable() {
         let lp = make_dict();
-        assert_eq!(lp.find_leaving_variable(1), super::LeavingCase::Pos(1, 4.0)) // TODO: correct??
+        assert_eq!(lp.find_leaving_variable(1), super::LeavingCase::Pos(1, 4.0))
     }
 
     #[test]
